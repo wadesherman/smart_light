@@ -165,10 +165,17 @@ void callback(char* topic, byte* payload, unsigned int length) {
   } else if (strcmp(topic, C) == 0) {
     Serial.println(m);
     int h, s, v;
+    float f_h, f_s, f_v;
+    
     if (sscanf(m, "%d,%d,%d", &h, &s, &v) == 3) {
       color[0] = map(h,0,360,0,255);
       color[1] = map(s,0,100,0,255);
       color[2] = map(v,0,100,0,255);
+      setColor();
+    } else if (sscanf(m, "%f,%f,%f", &f_h, &f_s, &f_v) == 3) {
+      color[0] = map(int(f_h),0,360,0,255);
+      color[1] = map(int(f_s),0,100,0,255);
+      color[2] = map(int(f_v),0,100,0,255);
       setColor();
     } else {
       Serial.println("error :(");
